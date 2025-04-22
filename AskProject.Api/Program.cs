@@ -1,3 +1,5 @@
+using AskProject.Api.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add these service registrations
@@ -11,6 +13,14 @@ builder.Services.AddSwaggerGen(c =>
         Description = "An API for the Ask Project"
     });
 });
+
+// Add controllers support
+builder.Services.AddControllers();
+
+// Add in Program.cs before builder.Build()
+builder.Services.AddHttpClient<HuggingFaceService>();
+builder.Services.AddScoped<HuggingFaceService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -26,28 +36,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
+// Later in the pipeline
+app.MapControllers();
 
 app.Run();
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
+
