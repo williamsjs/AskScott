@@ -1,0 +1,87 @@
+## .NET Core
+bin/
+obj/
+out/
+artifacts/
+
+## Visual Studio files
+.vs/
+*.user
+*.userosscache
+*.suo
+*.userprefs
+*.dbmdl
+*.dbproj.schemaview
+*.jfm
+*.pfx
+*.publishsettings
+orleans.codegen.cs
+launchSettings.json
+
+## Rider files
+.idea/
+*.sln.iml
+.idea/
+*.csproj.user
+
+## User-specific files
+*.rsuser
+*.ide/
+
+## NuGet packages
+*.nupkg
+*.snupkg
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+*.nuget.props
+*.nuget.targets
+
+## Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+## Visual Studio for Mac
+.vscode/
+mono_crash.*
+
+## ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+## TestResults
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+*.VisualState.xml
+TestResult.xml
+nunit-*.xml
+
+## Various settings
+*.DotSettings.user
+*.GhostDoc.xml
+
+## Local configuration
+appsettings.Development.json
+appsettings.Local.json
+appsettings.*.Development.json
+*.Development.json
+
+## .NET Core
+project.lock.json
+project.fragment.lock.json
+
+## MSBuild Binary and Structured Log
+*.binlog
+
+## Coverage reports
+*.coverage
+*.coveragexml
