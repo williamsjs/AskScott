@@ -22,7 +22,7 @@ public class AskController : ControllerBase
             var response = await _huggingFaceService.GenerateCompletion(question);
             return Ok(response);
         }
-        catch (Exception ex)
+        catch
         {
             return StatusCode(500, "An error occurred while processing your request.");
         }

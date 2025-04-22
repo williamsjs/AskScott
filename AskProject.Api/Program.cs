@@ -17,6 +17,19 @@ builder.Services.AddSwaggerGen(c =>
 // Add controllers support
 builder.Services.AddControllers();
 
+// Add CORS services
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", 
+        builder =>
+        {
+            builder
+                .AllowAnyOrigin()     // Allow requests from any origin
+                .AllowAnyMethod()     // Allow all HTTP methods (GET, POST, etc.)
+                .AllowAnyHeader();    // Allow all headers
+        });
+});
+
 // Add in Program.cs before builder.Build()
 builder.Services.AddHttpClient<HuggingFaceService>();
 builder.Services.AddScoped<HuggingFaceService>();
@@ -32,8 +45,13 @@ if (app.Environment.IsDevelopment())
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ask Project API v1");
     });
+    // Add the CORS middleware - this position is important!
+    app.UseCors("AllowAll");
 }
 
+
+
+app.UseRouting();
 app.UseHttpsRedirection();
 
 // Later in the pipeline
