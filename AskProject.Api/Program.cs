@@ -45,13 +45,17 @@ builder.Services.AddControllers();
 // Add CORS services
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", 
+    options.AddPolicy("AllowVercelApp", 
         builder =>
         {
             builder
-                .AllowAnyOrigin()     // Allow requests from any origin
-                .AllowAnyMethod()     // Allow all HTTP methods (GET, POST, etc.)
-                .AllowAnyHeader();    // Allow all headers
+                .WithOrigins(
+                    "https://chat-app-two-phi-11.vercel.app",
+                    "https://chat-app-two-phi-11.vercel.app:443"
+                )
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials();
         });
 });
 
@@ -73,6 +77,9 @@ if (app.Environment.IsDevelopment())
     // Add the CORS middleware - this position is important!
     app.UseCors("AllowAll");
 }
+
+// Add the CORS middleware - MOVE THIS OUTSIDE the development block
+app.UseCors("AllowVercelApp");
 
 // In middleware pipeline
 app.MapHealthChecks("/health");
