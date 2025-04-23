@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: askproject-api
+    env: docker
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: ApiKey
+        sync: false
+      - key: HuggingFace__ApiKey
+        sync: false
+    healthCheckPath: /health

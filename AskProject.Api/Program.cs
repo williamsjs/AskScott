@@ -19,6 +19,8 @@ builder.Services.Configure<IpRateLimitOptions>(options =>
     };
 });
 
+builder.Services.AddHealthChecks();
+
 // Register dependencies
 builder.Services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
 builder.Services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
@@ -72,7 +74,8 @@ if (app.Environment.IsDevelopment())
     app.UseCors("AllowAll");
 }
 
-
+// In middleware pipeline
+app.MapHealthChecks("/health");
 
 app.UseRouting();
 app.UseHttpsRedirection();
