@@ -8,15 +8,22 @@ namespace AskProject.Api.Controllers;
 public class AskController : ControllerBase
 {
     private readonly HuggingFaceService _huggingFaceService;
+    private readonly string _apiKey;
 
-    public AskController(HuggingFaceService huggingFaceService)
+    public AskController(HuggingFaceService huggingFaceService, IConfiguration configuration)
     {
         _huggingFaceService = huggingFaceService;
+        _apiKey = configuration["ApiKey"];
     }
 
     [HttpPost("AskQuestion")]
-    public async Task<ActionResult<string>> AskQuestion([FromBody] string question)
+    public async Task<ActionResult<string>> AskQuestion([FromHeader(Name = "X-API-KEY")] string apiKey, [FromBody] string question)
     {
+        if (string.IsNullOrEmpty(apiKey) || apiKey != _apiKey)
+        {
+            return Unauthorized();
+        }
+
         try
         {
             var response = await _huggingFaceService.GenerateCompletion(question);
